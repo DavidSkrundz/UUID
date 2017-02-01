@@ -17,7 +17,7 @@ enum UUIDParserError: Error {
 	case MalformedUUIDString
 }
 
-internal class UUIDStringParser {
+internal struct UUIDStringParser {
 	private init() {}
 	
 	/// Convert two hex `Character`s into a `Byte`
@@ -25,7 +25,7 @@ internal class UUIDStringParser {
 	/// - Precondition: The `Character`s are `[0-9a-fA-F]`
 	///
 	/// - Returns: The `Byte` that is represented by the `Character`s
-	class func parseByte(_ char1: Character, _ char2: Character) -> Byte {
+	static func parseByte(_ char1: Character, _ char2: Character) -> Byte {
 		precondition(char1.isHexDigit)
 		precondition(char2.isHexDigit)
 		
@@ -41,7 +41,7 @@ internal class UUIDStringParser {
 	/// - Precondition: The length of `characters` is a multiple of 2
 	///
 	/// - Returns: The `Byte` values of the `Character`s
-	class func parseBytes(_ characters: [Character]) -> [Byte] {
+	static func parseBytes(_ characters: [Character]) -> [Byte] {
 		precondition(characters.count % 2 == 0)
 		
 		var characters = characters
@@ -59,7 +59,7 @@ internal class UUIDStringParser {
 	/// - Throws: `UUIDParserError` if the `String` is not formatted properly
 	///
 	/// - Returns: The `Byte`s that are represented by the `String`
-	class func parseUUIDString(_ string: String) throws -> [Byte] {
+	static func parseUUIDString(_ string: String) throws -> [Byte] {
 		guard let match = UUIDRegex.match(string).first else {
 			throw UUIDParserError.MalformedUUIDString
 		}
