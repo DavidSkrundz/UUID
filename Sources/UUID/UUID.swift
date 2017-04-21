@@ -131,7 +131,7 @@ public struct UUID {
 		let offset = 0x01b21dd213814000
 		
 		let precisionTimeInfo = time.preciseTimeInfo
-		let time = precisionTimeInfo.ticksSince1970 + offset
+		let time = precisionTimeInfo.ticksSince1970 + Int64(offset)
 		
 		let clockSequence = UUID.clockSequence.clockSequence()
 		
