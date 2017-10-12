@@ -18,11 +18,11 @@ public enum Namespace {
 			0x80, 0xB4, 0x00, 0xC0, 0x4F, 0xD4, 0x30, 0xC8
 		]
 		switch self {
-			case .DN(_):   bytes[3] = 0x14
-			case .DNS(_):  bytes[3] = 0x10
-			case .URL(_):  bytes[3] = 0x11
-			case .OID(_):  bytes[3] = 0x12
-			case .Name(_): bytes[3] = 0x13
+			case .DN:   bytes[3] = 0x14
+			case .DNS:  bytes[3] = 0x10
+			case .URL:  bytes[3] = 0x11
+			case .OID:  bytes[3] = 0x12
+			case .Name: bytes[3] = 0x13
 		}
 		return UUID(bytes: bytes)
 	}

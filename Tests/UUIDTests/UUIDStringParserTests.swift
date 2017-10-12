@@ -3,8 +3,8 @@
 //  UUID
 //
 
-@testable import UUID
 import XCTest
+@testable import UUID
 
 class UUIDStringParserTests: XCTestCase {
 	func testSingleByte() {
@@ -29,14 +29,14 @@ class UUIDStringParserTests: XCTestCase {
 			0xE8, 0x9B,
 			0x12, 0xD3,
 			0xA4, 0x56,
-			0x42, 0x66, 0x55, 0x44, 0x00, 0x00,
-		])
+			0x42, 0x66, 0x55, 0x44, 0x00, 0x00
+			])
 	}
 	
 	static var allTests = [
 		("testSingleByte", testSingleByte),
 		("testLetterByte", testLetterByte),
 		("testMultibyte", testMultibyte),
-		("testUUIDString", testUUIDString),
+		("testUUIDString", testUUIDString)
 	]
 }

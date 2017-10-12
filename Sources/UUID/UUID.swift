@@ -5,7 +5,6 @@
 
 import Hash
 import LibC
-import ProtocolNumbers
 
 // Reference: https://tools.ietf.org/html/rfc4122
 //
@@ -82,10 +81,8 @@ public struct UUID {
 		switch version {
 			case .v1:
 				let time = Time()
-				
-				let interface = Interface.Interfaces().first
+				let interface = Interface.interfaces().first
 				let macAddress = interface?.macAddress ?? MACAddress.Nil
-				
 				self.bytes = UUID.Version1Bytes(time: time, mac: macAddress)
 			case .v3(namespace: _, name: _):
 				self.bytes = UUID.Version3Bytes(version)
@@ -128,10 +125,10 @@ public struct UUID {
 	private static func Version1Bytes(time: Time, mac: MACAddress) -> [Byte] {
 		// Number of 100-ns intervals from 00:00:00.00 15 October 1582
 		// to 00:00:00.00 1 January 1970
-		let offset = 0x01b21dd213814000
+		let offset: Int64 = 0x01b21dd213814000
 		
 		let precisionTimeInfo = time.preciseTimeInfo
-		let time = precisionTimeInfo.ticksSince1970 + Int64(offset)
+		let time = precisionTimeInfo.ticksSince1970 + offset
 		
 		let clockSequence = UUID.clockSequence.clockSequence()
 		
@@ -140,16 +137,16 @@ public struct UUID {
 		var bytes = [Byte](repeating: 0, count: 16)
 		
 		// a
-		bytes[0] = UInt8((time ≫ 24) & 0xFF)
-		bytes[1] = UInt8((time ≫ 16) & 0xFF)
-		bytes[2] = UInt8((time ≫ 8) & 0xFF)
-		bytes[3] = UInt8((time ≫ 0) & 0xFF)
+		bytes[0] = UInt8((time >> 24) & 0xFF)
+		bytes[1] = UInt8((time >> 16) & 0xFF)
+		bytes[2] = UInt8((time >>  8) & 0xFF)
+		bytes[3] = UInt8((time >>  0) & 0xFF)
 		// b
-		bytes[4] = UInt8((time ≫ 40) & 0xFF)
-		bytes[5] = UInt8((time ≫ 32) & 0xFF)
+		bytes[4] = UInt8((time >> 40) & 0xFF)
+		bytes[5] = UInt8((time >> 32) & 0xFF)
 		// c
-		bytes[6] = UInt8((time ≫ 56) & 0x0F) | 0x10
-		bytes[7] = UInt8((time ≫ 48) & 0xFF)
+		bytes[6] = UInt8((time >> 56) & 0x0F) | 0x10
+		bytes[7] = UInt8((time >> 48) & 0xFF)
 		// x
 		bytes[8] = UInt8(clockSequence[0] & 0x3F) | 0x80
 		bytes[9] = UInt8(clockSequence[1] & 0xFF)
@@ -192,7 +189,7 @@ public struct UUID {
 	private static func Version3Bytes(_ version: UUIDVersion) -> [Byte] {
 		guard case let .v3(namespace, name) = version else { fatalError() }
 		
-		return self.NameUUIDBytes(namespace: namespace,
+		return self.nameUUIDBytes(namespace: namespace,
 		                          name: name,
 		                          hash: MD5.self,
 		                          versionCode: 0x30)
@@ -224,7 +221,7 @@ public struct UUID {
 	///   │   │   │   │   │   │   │   │   ││   │   │   │   │   │   │   │   │
 	///   └───┴───┴───┴───┴───┴───┴───┴───┘└───┴───┴───┴───┴───┴───┴───┴───┘
 	private static func Version4Bytes() -> [Byte] {
-		var bytes = (1...16).map { _ in Random.UInt8() }
+		var bytes = (1...16).map { _ in UInt8.random() }
 		bytes[6] = bytes[6] & 0x0F + 0x40
 		bytes[8] = bytes[8] & 0x3F + 0x80
 		return bytes
@@ -258,13 +255,13 @@ public struct UUID {
 	private static func Version5Bytes(_ version: UUIDVersion) -> [Byte] {
 		guard case let .v5(namespace, name) = version else { fatalError() }
 		
-		return self.NameUUIDBytes(namespace: namespace,
+		return self.nameUUIDBytes(namespace: namespace,
 		                          name: name,
 		                          hash: SHA1.self,
 		                          versionCode: 0x50)
 	}
 	
-	private static func NameUUIDBytes(namespace: Namespace,
+	private static func nameUUIDBytes(namespace: Namespace,
 	                                  name: String,
 	                                  hash: Hashing.Type,
 	                                  versionCode: Byte) -> [Byte] {

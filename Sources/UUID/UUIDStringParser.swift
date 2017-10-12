@@ -3,16 +3,6 @@
 //  UUID
 //
 
-import Regex
-import Util
-
-private let UUIDPattern = "([0-9a-fA-F]{8})\\-" +
-                          "([0-9a-fA-F]{4})\\-" +
-                          "([0-9a-fA-F]{4})\\-" +
-                          "([0-9a-fA-F]{4})\\-" +
-                          "([0-9a-fA-F]{12})"
-private let UUIDRegex = try! Regex(UUIDPattern)
-
 enum UUIDParserError: Error {
 	case MalformedUUIDString
 }
@@ -28,7 +18,7 @@ internal struct UUIDStringParser {
 	static func parseByte(_ char1: Character, _ char2: Character) -> Byte {
 		precondition(char1.isHexDigit)
 		precondition(char2.isHexDigit)
-		
+
 		guard let byte = Byte("\(char1)\(char2)", radix: 16) else {
 			fatalError("Precondition failure - Non-hex Character found")
 		}
@@ -43,7 +33,7 @@ internal struct UUIDStringParser {
 	/// - Returns: The `Byte` values of the `Character`s
 	static func parseBytes(_ characters: [Character]) -> [Byte] {
 		precondition(characters.count % 2 == 0)
-		
+
 		var characters = characters
 		var bytes = [Byte]()
 		while characters.count > 0 {
@@ -60,14 +50,20 @@ internal struct UUIDStringParser {
 	///
 	/// - Returns: The `Byte`s that are represented by the `String`
 	static func parseUUIDString(_ string: String) throws -> [Byte] {
-		guard let match = UUIDRegex.match(string).first else {
-			throw UUIDParserError.MalformedUUIDString
-		}
-		
-		let characters = match.groups
-			.reduce("", +)
-			.characters.map { $0 }
-		
-		return UUIDStringParser.parseBytes(characters)
+		if string.count != 36 { throw UUIDParserError.MalformedUUIDString }
+		let characters: [Character] = string.filter { $0 != "-" }
+		if characters.count != 32 { throw UUIDParserError.MalformedUUIDString }
+		let hex = characters.filter { $0.isHexDigit }
+		if hex.count != 32 { throw UUIDParserError.MalformedUUIDString }
+		return self.parseBytes(hex)
 	}
+	
+	//import Util
+	
+	//private let UUIDPattern = "([0-9a-fA-F]{8})\\-" +
+	//                          "([0-9a-fA-F]{4})\\-" +
+	//                          "([0-9a-fA-F]{4})\\-" +
+	//                          "([0-9a-fA-F]{4})\\-" +
+	//                          "([0-9a-fA-F]{12})"
+	//private let UUIDRegex = try! Regex(UUIDPattern)
 }

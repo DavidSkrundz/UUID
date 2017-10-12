@@ -3,8 +3,8 @@
 //  UUID
 //
 
-@testable import UUID
 import XCTest
+import UUID
 
 class UUIDTests: XCTestCase {
 	func testVersion1() {
@@ -41,8 +41,8 @@ class UUIDTests: XCTestCase {
 			0xE8, 0x9B,
 			0x12, 0xD3,
 			0xA4, 0x56,
-			0x42, 0x66, 0x55, 0x44, 0x00, 0x00,
-		])
+			0x42, 0x66, 0x55, 0x44, 0x00, 0x00
+			])
 		XCTAssertEqual("\(uuid)", "123e4567-e89b-12d3-a456-426655440000")
 	}
 	
@@ -59,6 +59,6 @@ class UUIDTests: XCTestCase {
 		("testRandomUUIDIsVersion4", testRandomUUIDIsVersion4),
 		("testVersion5", testVersion5),
 		("testStringConversion", testStringConversion),
-		("testHash", testHash),
+		("testHash", testHash)
 	]
 }

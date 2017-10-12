@@ -3,8 +3,8 @@
 //  UUID
 //
 
-@testable import UUIDTests
 import XCTest
+@testable import UUIDTests
 
 XCTMain([
 	testCase(UUIDStringParserTests.allTests),
