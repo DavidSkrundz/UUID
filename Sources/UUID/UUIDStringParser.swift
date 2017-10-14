@@ -57,13 +57,4 @@ internal struct UUIDStringParser {
 		if hex.count != 32 { throw UUIDParserError.MalformedUUIDString }
 		return self.parseBytes(hex)
 	}
-	
-	//import Util
-	
-	//private let UUIDPattern = "([0-9a-fA-F]{8})\\-" +
-	//                          "([0-9a-fA-F]{4})\\-" +
-	//                          "([0-9a-fA-F]{4})\\-" +
-	//                          "([0-9a-fA-F]{4})\\-" +
-	//                          "([0-9a-fA-F]{12})"
-	//private let UUIDRegex = try! Regex(UUIDPattern)
 }
