@@ -18,7 +18,7 @@ internal struct UUIDStringParser {
 	static func parseByte(_ char1: Character, _ char2: Character) -> Byte {
 		precondition(char1.isHexDigit)
 		precondition(char2.isHexDigit)
-
+		
 		guard let byte = Byte("\(char1)\(char2)", radix: 16) else {
 			fatalError("Precondition failure - Non-hex Character found")
 		}
@@ -33,7 +33,7 @@ internal struct UUIDStringParser {
 	/// - Returns: The `Byte` values of the `Character`s
 	static func parseBytes(_ characters: [Character]) -> [Byte] {
 		precondition(characters.count % 2 == 0)
-
+		
 		var characters = characters
 		var bytes = [Byte]()
 		while characters.count > 0 {

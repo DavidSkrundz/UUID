@@ -190,9 +190,9 @@ public struct UUID {
 		guard case let .v3(namespace, name) = version else { fatalError() }
 		
 		return self.nameUUIDBytes(namespace: namespace,
-		                          name: name,
-		                          hash: MD5.self,
-		                          versionCode: 0x30)
+								  name: name,
+								  hash: MD5.self,
+								  versionCode: 0x30)
 	}
 	
 	/// Unspecified bits are random
@@ -256,15 +256,15 @@ public struct UUID {
 		guard case let .v5(namespace, name) = version else { fatalError() }
 		
 		return self.nameUUIDBytes(namespace: namespace,
-		                          name: name,
-		                          hash: SHA1.self,
-		                          versionCode: 0x50)
+								  name: name,
+								  hash: SHA1.self,
+								  versionCode: 0x50)
 	}
 	
 	private static func nameUUIDBytes(namespace: Namespace,
-	                                  name: String,
-	                                  hash: Hashing.Type,
-	                                  versionCode: Byte) -> [Byte] {
+									  name: String,
+									  hash: Hashing.Type,
+									  versionCode: Byte) -> [Byte] {
 		let fullName = namespace.uuid.bytes + name.utf8.map { Byte($0) }
 		var bytes = hash.hash(fullName).bytes
 		

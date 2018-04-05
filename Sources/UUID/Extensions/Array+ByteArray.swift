@@ -3,6 +3,10 @@
 //  UUID
 //
 
+/// - TODO: Remove once Xcode stops thinking it needs
+/// `static (extension in Foundation):Swift.String._unconditionallyBridgeFromObjectiveC(__ObjC.NSString?) -> Swift.String`
+import Foundation
+
 private let indexToHexMap: [Character] = [
 	"0", "1", "2", "3", "4", "5", "6", "7",
 	"8", "9", "a", "b", "c", "d", "e", "f"
@@ -33,7 +37,6 @@ extension Array where Element == Byte {
 	/// - Precondition: `bytes.count == sizeof(Int.self)`
 	internal func combineToInt() -> Int {
 		precondition(self.count == MemoryLayout<Int>.size)
-		
 		return self.reduce(0) { ($0 << 8) + Int($1) }
 	}
 }

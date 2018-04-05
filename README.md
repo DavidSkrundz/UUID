@@ -1,4 +1,4 @@
-UUID [![Swift Version](https://img.shields.io/badge/Swift-4.0-orange.svg)](https://swift.org/download/#snapshots) [![Build Status](https://travis-ci.org/DavidSkrundz/UUID.svg?branch=master)](https://travis-ci.org/DavidSkrundz/UUID) [![Codebeat Status](https://codebeat.co/badges/68c11dd2-40b7-4397-9b27-cbd5f3fd356c)](https://codebeat.co/projects/github-com-davidskrundz-uuid)
+UUID [![Swift Version](https://img.shields.io/badge/Swift-4.1-orange.svg)](https://swift.org/download/#snapshots) [![Build Status](https://travis-ci.org/DavidSkrundz/UUID.svg?branch=master)](https://travis-ci.org/DavidSkrundz/UUID) [![Codebeat Status](https://codebeat.co/badges/68c11dd2-40b7-4397-9b27-cbd5f3fd356c)](https://codebeat.co/projects/github-com-davidskrundz-uuid)
 ====
 
 A Swift implementation of UUID
