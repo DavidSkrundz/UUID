@@ -49,7 +49,7 @@ public typealias Byte = UInt8
 
 /// A `UUID` which can be used to uniquely identify types, interfaces, and other
 /// items.
-public struct UUID {
+public struct UUID: Equatable {
 	public static let Nil = UUID(bytes: [Byte](repeating: 0, count: 16))
 	
 	private static var clockSequence = ClockSequence()
